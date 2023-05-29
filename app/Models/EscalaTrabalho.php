@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EscalaTrabalho extends Model
 {
@@ -18,4 +19,10 @@ class EscalaTrabalho extends Model
         'fim',
         'status',
     ];
+
+    public function colaboradors(): HasMany
+    {
+        return $this->hasMany(Colaborador::class, 'escala_trabalho_id');
+    }
+
 }

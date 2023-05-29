@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Colaborador extends Model
 {
@@ -19,8 +19,9 @@ class Colaborador extends Model
         'escala_trabalho_id',
     ];
 
-    public function escala_trabalho(): HasOne
+    public function escala_trabalho(): BelongsTo
     {
-        return $this->hasOne(EscalaTrabalho::class);
+        return $this->belongsTo(EscalaTrabalho::class);
     }
+
 }

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('coladoradors', function (Blueprint $table) {
+        Schema::create('colaboradors', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('matricula');
             $table->string('cpf');
             $table->boolean('status')->default(1);
-            $table->foreignId('escala_trabalho_id')->constrained('escala_trabalho');
+            $table->foreignId('escala_trabalho_id')->nullable()->constrained('escala_trabalho');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('coladoradors');
+        Schema::dropIfExists('colaboradors');
     }
 };
