@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Colaborador;
 use App\Models\EscalaTrabalho;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,85 +9,84 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use JWTAuth;
 use Tests\TestCase;
 
-class ColaboradorsApiTest extends TestCase
+class EscalaTrabalhoApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_if_colaboradors_can_be_store_using_api_routes(): void
+    public function test_if_escala_trabalho_can_be_store_using_api_routes(): void
     {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
         $header_token = ['Authorization' => 'Bearer ' . $token];
 
-        $escala = EscalaTrabalho::factory()->create();
+        $new_escala_trabalho = ['nome' => 'Padrao', 'inicio' => '09:00', 'fim' => '18:00'];
 
-        $new_colaborador = ['nome' => 'Ataide', 'matricula' => '12345', 'cpf' => '22813495867', 'escala_trabalho_id' => $escala->id];
-
-        $response = $this->withHeaders($header_token)->post('api/colaboradores', $new_colaborador);
+        $response = $this
+            ->withHeaders($header_token)
+            ->post('api/escala_trabalho', $new_escala_trabalho);
 
         $response->assertCreated()->assertJson(fn(AssertableJson $json) =>
-            $json->where('data.nome', $new_colaborador['nome'])
+            $json->where('data.nome', $new_escala_trabalho['nome'])
                 ->etc()
         );
     }
 
-    public function test_if_colaboradors_can_be_deleted_using_api_routes(): void
+    public function test_if_escala_trabalho_can_be_deleted_using_api_routes(): void
     {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
         $header_token = ['Authorization' => 'Bearer ' . $token];
 
-        $colaborador = Colaborador::factory()->create();
+        $escala_trabalho = EscalaTrabalho::factory()->create();
 
         $response = $this
             ->withHeaders($header_token)
-            ->delete('/api/colaboradores', [
-                "id" => $colaborador['id'],
+            ->delete('/api/escala_trabalho', [
+                "id" => $escala_trabalho['id'],
             ]);
 
         $response->assertNoContent();
     }
 
-    public function test_if_colaboradors_can_be_updated_using_api_routes(): void
+    public function test_if_escala_trabalho_can_be_updated_using_api_routes(): void
     {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
         $header_token = ['Authorization' => 'Bearer ' . $token];
 
-        $colaborador = Colaborador::factory()->create();
+        $escala_trabalho = EscalaTrabalho::factory()->create();
 
         $response = $this
             ->withHeaders($header_token)
-            ->patch('/api/colaboradores', [
-                "id" => $colaborador['id'],
-                "nome" => "Dennis",
-                "matricula" => $colaborador['matricula'],
-                "cpf" => $colaborador['cpf'],
-                "escala_trabalho_id" => $colaborador['escala_trabalho_id'],
+            ->patch('/api/escala_trabalho', [
+                "id" => $escala_trabalho['id'],
+                "nome" => "Noturno",
+                "inicio" => $escala_trabalho['inicio'],
+                "fim" => $escala_trabalho['fim'],
             ]);
 
         $response->assertOk()->assertJson(fn(AssertableJson $json) =>
-            $json->where('data.nome', 'Dennis')
+            $json->where('data.nome', 'Noturno')
                 ->etc()
         );
 
     }
 
-    public function test_if_api_can_search_colaboradors_by_params(): void
+    public function test_if_api_can_search_escala_trabalho_by_params(): void
     {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
         $header_token = ['Authorization' => 'Bearer ' . $token];
 
-        $colaborador = Colaborador::factory()->create();
+        $escala_trabalho = EscalaTrabalho::factory()->create();
 
         $response = $this
             ->withHeaders($header_token)
-            ->post('/api/colaboradores/search', [
-                "nome" => $colaborador['nome'],
+            ->post('/api/escala_trabalho/search', [
+                "nome" => $escala_trabalho['nome'],
             ]);
         $response->assertOk()->assertJson(fn(AssertableJson $json) =>
-            $json->where('data.0.nome', $colaborador['nome'])
+            $json->where('data.0.nome', $escala_trabalho['nome'])
                 ->etc()
         );
     }
