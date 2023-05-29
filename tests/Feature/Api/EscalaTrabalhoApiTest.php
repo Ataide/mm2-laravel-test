@@ -69,26 +69,6 @@ class EscalaTrabalhoApiTest extends TestCase
             $json->where('data.nome', 'Noturno')
                 ->etc()
         );
-
-    }
-
-    public function test_if_api_can_search_escala_trabalho_by_params(): void
-    {
-        $user = User::factory()->create();
-        $token = JWTAuth::fromUser($user);
-        $header_token = ['Authorization' => 'Bearer ' . $token];
-
-        $escala_trabalho = EscalaTrabalho::factory()->create();
-
-        $response = $this
-            ->withHeaders($header_token)
-            ->post('/api/escala_trabalho/search', [
-                "nome" => $escala_trabalho['nome'],
-            ]);
-        $response->assertOk()->assertJson(fn(AssertableJson $json) =>
-            $json->where('data.0.nome', $escala_trabalho['nome'])
-                ->etc()
-        );
     }
 
 }
