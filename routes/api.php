@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ColaboradorsApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,10 @@ Route::middleware('api')->get('/user', function (Request $request) {
 Route::middleware('api')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+
+    Route::get('/colaboradores', [ColaboradorsApiController::class, 'index']);
+    Route::post('/colaboradores/search', [ColaboradorsApiController::class, 'show']);
+    Route::post('/colaboradores', [ColaboradorsApiController::class, 'store']);
+    Route::patch('/colaboradores', [ColaboradorsApiController::class, 'update']);
+    Route::delete('/colaboradores', [ColaboradorsApiController::class, 'destroy']);
 });
