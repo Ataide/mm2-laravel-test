@@ -18,10 +18,9 @@ class ColaboradorController extends Controller
      */
     public function index(Request $request): Response
     {
-        $colaboladors = Colaborador::all();
-
+        $colaboradors = Colaborador::all()->load('escala_trabalho');
         return Inertia::render('Colaboradors/Index', [
-            "colaboradors" => $colaboladors,
+            "colaboradors" => $colaboradors,
         ]);
     }
 

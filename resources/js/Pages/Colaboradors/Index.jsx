@@ -4,6 +4,8 @@ import { Container } from "@/Components/Container";
 import { PrimaryButton } from "@/Components/PrimaryButton";
 import { Link, useForm } from "@inertiajs/react";
 import DangerButton from "../../../../vendor/laravel/breeze/stubs/inertia-react/resources/js/Components/DangerButton";
+import { stringify } from "qs";
+import { useEffect } from "react";
 
 export default function Index({ auth, colaboradors }) {
   const data = colaboradors;
@@ -60,6 +62,16 @@ export default function Index({ auth, colaboradors }) {
       },
     },
     {
+      name: "escala_trabalho",
+      label: "Escala",
+      options: {
+        filter: true,
+        sort: false,
+        customBodyRender: escala =>
+          escala.nome + "-" + escala.inicio + " " + escala.fim,
+      },
+    },
+    {
       name: "id",
       label: "Ações",
       options: {
@@ -93,6 +105,46 @@ export default function Index({ auth, colaboradors }) {
       },
     },
   ];
+
+  var optionsNavigation = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+  function success(pos) {
+    var crd = pos.coords;
+
+    console.log("Your current position is:");
+    console.log(`Latitude : ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+    console.log(`More or less ${crd.accuracy} meters.`);
+  }
+
+  function errors(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  useEffect(() => {
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then(function (result) {
+        if (result.state === "granted") {
+          console.log(result.state);
+          //If granted then you can directly call your function here
+        } else if (result.state === "prompt") {
+          navigator.geolocation.getCurrentPosition(
+            success,
+            errors,
+            optionsNavigation
+          );
+        } else if (result.state === "denied") {
+          //If denied then you have to show instructions to enable location
+        }
+        result.onchange = function () {
+          console.log(result.state);
+        };
+      });
+  }, []);
 
   return (
     <>

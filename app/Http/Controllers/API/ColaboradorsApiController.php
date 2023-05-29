@@ -17,7 +17,7 @@ class ColaboradorsApiController extends BaseApiController
 
     public function index(Request $request): JsonResponse
     {
-        $colaboradores = Colaborador::all();
+        $colaboradores = Colaborador::all()->load('escala_trabalho');
         return $this->sendResponse($colaboradores, '');
     }
 
