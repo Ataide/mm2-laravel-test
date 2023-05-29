@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EscalaTrabalhoRequest;
-use App\Interfaces\EscalaTrabalhoRepositoryInterface;
 use App\Models\EscalaTrabalho;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -12,13 +11,6 @@ use Inertia\Response;
 
 class EscalaTrabalhoController extends Controller
 {
-    private EscalaTrabalhoRepositoryInterface $escalaTrabalhoRepository;
-
-    public function __construct(EscalaTrabalhoRepositoryInterface $escalaTrabalhoRepository)
-    {
-        $this->escalaTrabalhoRepository = $escalaTrabalhoRepository;
-
-    }
     /**
      * Display a listing of the resource.
      */
