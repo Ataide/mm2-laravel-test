@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ColaboradorsApiController;
 use App\Http\Controllers\API\EscalaTrabalhoApiController;
+use App\Http\Controllers\API\RegistroPontoApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,8 @@ Route::middleware('api')->group(function () {
     Route::post('/escala_trabalho', [EscalaTrabalhoApiController::class, 'store']);
     Route::patch('/escala_trabalho', [EscalaTrabalhoApiController::class, 'update']);
     Route::delete('/escala_trabalho', [EscalaTrabalhoApiController::class, 'destroy']);
+
+    Route::get('/registro_ponto', [RegistroPontoApiController::class, 'index']);
+    Route::post('/registro_ponto', [RegistroPontoApiController::class, 'store']);
+
 });

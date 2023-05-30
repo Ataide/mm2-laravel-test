@@ -3,6 +3,7 @@
 use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\EscalaTrabalhoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistroPontoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,6 +48,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/escala-trabalho', [EscalaTrabalhoController::class, 'store'])->name('escala-trabalho.store');
     Route::patch('/escala-trabalho', [EscalaTrabalhoController::class, 'update'])->name('escala-trabalho.update');
     Route::delete('/escala-trabalho', [EscalaTrabalhoController::class, 'destroy'])->name('escala-trabalho.destroy');
+
+    Route::get('/registro-ponto', [RegistroPontoController::class, 'index'])->name('registro-ponto.index');
+    Route::get('/registro-ponto/create', [RegistroPontoController::class, 'create'])->name('registro-ponto.create');
+
+    Route::post('/registro-ponto', [RegistroPontoController::class, 'store'])->name('registro-ponto.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
