@@ -25,7 +25,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->bindMethod(RabbitJob::class . '@handle', function ($job) {
+            return $job->handle();
+        });
+
     }
 
     /**
