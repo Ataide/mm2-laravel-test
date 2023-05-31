@@ -42,6 +42,6 @@ class RegistroPontoTest extends TestCase
             ]);
 
         $response->assertValid();
-        $response->assertRedirect('/registro-ponto');
+        $response->assertRedirect('/dashboard');
     }
 }

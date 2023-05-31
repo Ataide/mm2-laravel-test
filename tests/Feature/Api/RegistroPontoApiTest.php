@@ -30,7 +30,7 @@ class RegistroPontoApiTest extends TestCase
         $response->assertOK()->assertJsonStructure(["success", "data", "message"]);
     }
 
-    public function test_if_registro_ponto_can_be_store_using_api_routes(): void
+    public function test_if_registro_ponto_can_be_send_to_queue_using_api_routes(): void
     {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
@@ -46,7 +46,7 @@ class RegistroPontoApiTest extends TestCase
             ->withHeaders($header_token)
             ->post('api/registro_ponto', $new_registro_ponto);
 
-        $response->assertCreated()->assertJson(fn(AssertableJson $json) =>
+        $response->assertAccepted()->assertJson(fn(AssertableJson $json) =>
             $json->where('data.colaboradors_id', $new_registro_ponto['colaboradors_id'])
                 ->etc()
         );
