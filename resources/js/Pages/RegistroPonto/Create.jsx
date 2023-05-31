@@ -54,7 +54,7 @@ export default function Create({ auth, colaboradors }) {
 
   function handleErros(err) {
     alert(
-      "Aconteceu um erro ao solicitar suas coordenadas de GPS, A api utilizada para fazer isso só funciona sobre IPV4. Pode ser isso."
+      "Aconteceu um erro ao solicitar suas coordenadas de GPS, A api utilizada para fazer isso só funciona sobre IPV4, ou não foi dado permisão para acessar a localização. Pode ser isso."
     );
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }

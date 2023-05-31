@@ -34,12 +34,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
   return (
     <>
       <Head title="Welcome" />
-      <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+      <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen  bg-center bg-dots-lighter bg-gray-900 selection:bg-red-500 selection:text-white">
         <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
           {auth.user ? (
             <Link
               href={route("dashboard")}
-              className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+              className="font-semibold text-gray-400 hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
             >
               Dashboard
             </Link>
@@ -47,14 +47,14 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <>
               <Link
                 href={route("login")}
-                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                className=" bg-emerald-600 p-3 rounded-xl font-semibold text-zinc-200 hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
               >
                 Log in
               </Link>
 
               <Link
                 href={route("register")}
-                className="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                className="ml-4 font-semibold text-gray-400 hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
               >
                 Register
               </Link>
@@ -285,20 +285,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 </tr>
                 <tr>
                   <td className="px-4 py-2 font-bold text-yellow-500">POST</td>
-                  <td className="px-4 py-2">/api/escala_trabalho</td>
-                  <td className="px-4 py-2">Cria um novo colaborador</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold text-purple-500">PATCH</td>
-                  <td className="px-4 py-2">/api/escala_trabalho</td>
-                  <td className="px-4 py-2">
-                    Atualiza um determinado colaborador
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 font-bold text-red-600">DELETE</td>
-                  <td className="px-4 py-2">/api/escala_trabalho</td>
-                  <td className="px-4 py-2">Deleta um colaborador</td>
+                  <td className="px-4 py-2">/api/registro_ponto</td>
+                  <td className="px-4 py-2">Cria um novo registro de ponto</td>
                 </tr>
               </tbody>
             </table>
@@ -313,6 +301,28 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 <br />
               </pre>
             </section>
+          </section>
+
+          <section className="mb-8 mt-10 text-white">
+            <h2 className="text-2xl font-bold mb-2"> Consumir a Fila </h2>
+            <table className="table-auto w-full">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2">HTTP Method</th>
+                  <th className="px-4 py-2">Endpoint</th>
+                  <th className="px-4 py-2">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="px-4 py-2 font-bold text-green-500">GET</td>
+                  <td className="px-4 py-2">/api/start-queue</td>
+                  <td className="px-4 py-2">
+                    Consome os items da fila e grava no banco de dados.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
         </section>
       </div>

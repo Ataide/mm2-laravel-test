@@ -1,0 +1,1 @@
+import{a,F as e}from"./app-8ecdcb7c.js";function m({children:s}){return a(e,{children:a("div",{className:"py-12",children:a("div",{className:"max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6",children:s})})})}export{m as C};

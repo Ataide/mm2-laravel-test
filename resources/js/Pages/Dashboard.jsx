@@ -153,7 +153,7 @@ export default function Dashboard({
         <section className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900">
-              <p>Grid com lista do rabbitMQ </p>
+              <p></p>
             </div>
             <div>
               <SecondaryButton className="btn" onClick={handleSync}>

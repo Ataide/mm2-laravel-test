@@ -71,17 +71,4 @@ class EscalaTrabalhoTest extends TestCase
         $this->assertSame('Escala Padrao', $escala->nome);
     }
 
-    public function test_coladorador_can_be_deleted(): void
-    {
-        // $user = User::factory()->create();
-
-        // $escala = EscalaTrabalho::factory()->create();
-
-        // $response = $this
-        //     ->actingAs($user)
-        //     ->delete('/escala-trabalho/' . $escala->id);
-
-        // $response->assertRedirect('/escala-trabalho');
-    }
-
 }
