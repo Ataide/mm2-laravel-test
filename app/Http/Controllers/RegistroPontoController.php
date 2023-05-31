@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistroPontoRequest;
+use App\Jobs\RegistroCreated;
 use App\Models\Colaborador;
 use App\Models\RegistroPonto;
 use Illuminate\Support\Facades\Redirect;
@@ -31,7 +32,7 @@ class RegistroPontoController extends Controller
     {
         $request->validated();
 
-        RegistroPonto::create([
+        RegistroCreated::dispatch([
             'colaboradors_id' => $request->colaboradors_id,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,

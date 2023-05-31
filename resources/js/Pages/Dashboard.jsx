@@ -4,16 +4,23 @@ import { Container } from "@/Components/Container";
 import MUIDataTable from "mui-datatables";
 import Paper from "@mui/material/Paper";
 import { PrimaryButton } from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
+import { router } from "@inertiajs/react";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Dashboard({
   auth,
   colaboradors_count,
   escala_count,
   registros,
+  api_token,
 }) {
   const data = registros;
   const route = window.route;
   const form = useForm();
+
+  const [syncQueue, setsyncQueue] = useState(false);
 
   const options = {
     download: false,
@@ -72,6 +79,24 @@ export default function Dashboard({
     },
   ];
 
+  const handleSync = async () => {
+    try {
+      setsyncQueue(true);
+      const queueResponse = await axios.get("/api/start-queue", {
+        headers: {
+          Authorization: `Bearer ${api_token}`,
+        },
+      });
+      console.log(queueResponse);
+      setsyncQueue(false);
+      router.reload();
+    } catch (error) {
+      alert("Não existe nada na fila.");
+    } finally {
+      setsyncQueue(false);
+    }
+  };
+
   return (
     <AuthenticatedLayout
       user={auth.user}
@@ -118,8 +143,10 @@ export default function Dashboard({
           <div>
             <h1 className="text-3xl pt-5">Lista RabbitMQ</h1>
             <p className="pt-5 text-zinc-600">
-              Aqui será apresentando a lista dos pontos que estão na fila do
-              RabbitMQ a serem processadas.
+              Os registros de ponto adicionados irão para a lista <b>default</b>{" "}
+              do RabbitMQ. Depois de adicionar o registro de ponto, clique np
+              botão CONSUMIR FILA que é possível "simular" um cosumer, que irá
+              armazenar no banco de dados os itens que estão na fila.
             </p>
           </div>
         </section>
@@ -128,8 +155,16 @@ export default function Dashboard({
             <div className="p-6 text-gray-900">
               <p>Grid com lista do rabbitMQ </p>
             </div>
+            <div>
+              <SecondaryButton className="btn" onClick={handleSync}>
+                {syncQueue ? "Aguarde..." : "CONSUMIR FILA"}
+              </SecondaryButton>
+            </div>
             <Link href={route("registro-ponto.create")}>
-              <PrimaryButton> Novo Registro de Ponto </PrimaryButton>
+              <PrimaryButton className="m-4">
+                {" "}
+                Novo Registro de Ponto{" "}
+              </PrimaryButton>
             </Link>
           </div>
         </section>

@@ -7,9 +7,11 @@ use App\Http\Controllers\RegistroPontoController;
 use App\Models\Colaborador;
 use App\Models\EscalaTrabalho;
 use App\Models\RegistroPonto;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +38,13 @@ Route::get('/dashboard', function () {
     $escalas = EscalaTrabalho::all();
     $registros = RegistroPonto::all()->load('colaboradors');
 
+    $api_token = JWTAuth::fromUser(User::factory()->create());
+
     return Inertia::render('Dashboard', [
         'colaboradors_count' => $colaboradors->count(),
         'escala_count' => $escalas->count(),
         'registros' => $registros,
+        'api_token' => $api_token,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

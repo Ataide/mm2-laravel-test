@@ -17,8 +17,16 @@ export default function Create({ auth, colaboradors }) {
 
   const [locationDenied, setLocationDenied] = useState(false);
 
-  const { data, setData, errors, post, reset, processing, recentlySuccessful } =
-    useForm({});
+  const {
+    data,
+    setData,
+    errors,
+    post,
+    reset,
+    get,
+    processing,
+    recentlySuccessful,
+  } = useForm({});
 
   const onSubmit = e => {
     e.preventDefault();
@@ -114,6 +122,13 @@ export default function Create({ auth, colaboradors }) {
                   </p>
                 </Alert>
               )}
+              <Alert severity="info" className="mb-6">
+                <AlertTitle>Repare Bem.</AlertTitle>
+                <p>
+                  Após vc adicionar um registro de ponto, fique atento que o
+                  registro não será enviado direto para o banco de dados.
+                </p>
+              </Alert>
 
               <header>
                 <h2 className="text-lg font-medium text-gray-900">
