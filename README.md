@@ -95,5 +95,9 @@ $ ./vendor/bin/sail test
 
 O registro de ponto nunca é adicionado diretamente no banco de dados pela api nem pelo front. O metodo store dos controllers tanto da api quanto do front enviam essa as informações do registro de ponto para um Job Queueable que adiciona a uma fila do RabbitMQ e existe uma rota da api "/api/start-queue" que chama um "worker" pra ler essa fila e gravar no banco de dados. Foi realizado essa abordagem simples para exemplificar o propósito do teste.
 
-Agradeço atenção e a oportunidade.
+#### Considerações Finais
+
+Desde de já agradeço a oportunidade de participar do processo seletivo, e ficarei feliz em poder explicar todo o desenvolvimento do projeto e todo o functionamento dele e as decisões tomadas durante todo o processo.
+
+Agradeço atenção.
 Ataide Bastos.
