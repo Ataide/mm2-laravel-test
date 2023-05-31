@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Jobs\RegistroCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,7 +26,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bindMethod(RabbitJob::class . '@handle', function ($job) {
+        $this->app->bindMethod(RegistroCreated::class . '@handle', function ($job) {
             return $job->handle();
         });
 

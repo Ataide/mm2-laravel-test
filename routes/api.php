@@ -40,4 +40,8 @@ Route::middleware('api')->group(function () {
     Route::get('/registro_ponto', [RegistroPontoApiController::class, 'index']);
     Route::post('/registro_ponto', [RegistroPontoApiController::class, 'store']);
 
+    Route::get('/start-queue', function () {
+        Artisan::call('queue:work --stop-when-empty', []);
+    });
+
 });
