@@ -9,9 +9,10 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-
 ## Instrução de Instalação
+
 Ferramentas e versões utilizadas:
+
 - NodeJs v16.20.0
 - docker v20.10.22
 - docker-compose v2.14.2
@@ -19,19 +20,21 @@ Ferramentas e versões utilizadas:
 Depois de fazer o clone do projeto, podemos ver que a pasta vendor foi adicionado ao repositório, favor desconsiderar em uma eventual analise técnica, isso só deu pra facilitar o levante dos containers que e nosso único comando a ser dado.
 
 Dentro da pasta do projeto:
+
 ```
 $ docker-compose up -d --build
 ```
 
-Depois de instalar os containers, devemos rodas as migrations com o comando: 
+Depois de instalar os containers, devemos rodas as migrations com o comando:
+
 ```
-$  ./vendor/bin/sail artisan migrate 
+$  ./vendor/bin/sail artisan migrate
 ```
 
 Agora devemos rodar os seeds.
 
 ```
-$ ./vendor/bin/sail artisan db:seed  
+$ ./vendor/bin/sail artisan db:seed
 ```
 
 Agora podemos acessar o sistema que está disponivel em:
@@ -41,7 +44,6 @@ Agora podemos acessar o sistema que está disponivel em:
     - email: admin@email.com
     - senha: password
 
-
 Já o painel do **Rabbitmq** está disponível em:
 
 - [http://localhost:15672](http://localhost:15672)
@@ -49,10 +51,7 @@ Já o painel do **Rabbitmq** está disponível em:
     - user: guest
     - pass: guest
 
-
-
-
-
+Na Pasta raiz do projeto tem a collection do postman com as rotas e seus payload.
 
 ## Sobre o desenvolvimento
 
@@ -78,28 +77,23 @@ Fico feliz em poder novamente ter um contato com esse framework fantástico. A A
   - [x] Enviar para uma fila e depois ser consumida e gravado no banco de dados:
   - [ ] Foto (selfie) do registro - opcional
 - [x] Você pode utilizar um endpoint na sua API que irá enviar as informações de registro
-para uma fila RabbitMQ.
+      para uma fila RabbitMQ.
 - [x] Essa fila será consumida e as informações gravadas no banco de dados que pode ser
-no seu banco relacional da aplicação,
+      no seu banco relacional da aplicação,
 - [x] Crie um desenho da sua arquitetura para apresentar sua solução
 - [x] Dê preferência para rodar tudo com um docker compose ou equivalente
-
 
 #### Teste
 
 Para rodar os teste bastas executar o comando:
 
 ```
-$ ./vendor/bin/sail test 
+$ ./vendor/bin/sail test
 ```
-
 
 #### Extra - Queue - RabbitMq
 
 O registro de ponto nunca é adicionado diretamente no banco de dados pela api nem pelo front. O metodo store dos controllers tanto da api quanto do front enviam essa as informações do registro de ponto para um Job Queueable que adiciona a uma fila do RabbitMQ e existe uma rota da api "/api/start-queue" que chama um "worker" pra ler essa fila e gravar no banco de dados. Foi realizado essa abordagem simples para exemplificar o propósito do teste.
 
-
 Agradeço atenção e a oportunidade.
 Ataide Bastos.
-
-
