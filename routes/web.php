@@ -4,6 +4,9 @@ use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\EscalaTrabalhoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistroPontoController;
+use App\Models\Colaborador;
+use App\Models\EscalaTrabalho;
+use App\Models\RegistroPonto;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,7 +32,15 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $colaboradors = Colaborador::all();
+    $escalas = EscalaTrabalho::all();
+    $registros = RegistroPonto::all()->load('colaboradors');
+
+    return Inertia::render('Dashboard', [
+        'colaboradors_count' => $colaboradors->count(),
+        'escala_count' => $escalas->count(),
+        'registros' => $registros,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

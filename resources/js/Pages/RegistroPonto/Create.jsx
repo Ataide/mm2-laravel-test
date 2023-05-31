@@ -8,10 +8,14 @@ import InputLabel from "@/Components/InputLabel";
 import { PrimaryButton } from "@/Components/PrimaryButton";
 import { useForm } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 export default function Create({ auth, colaboradors }) {
   const route = window.route;
   const [addr, setAddr] = useState({});
+
+  const [locationDenied, setLocationDenied] = useState(false);
 
   const { data, setData, errors, post, reset, processing, recentlySuccessful } =
     useForm({});
@@ -65,8 +69,9 @@ export default function Create({ auth, colaboradors }) {
             optionsNavigation
           );
         } else if (result.state === "denied") {
-          //If denied then you have to show instructions to enable location
+          setLocationDenied(true);
         }
+
         result.onchange = function () {
           console.log(
             "Para usar a ferramenta, precisamos da permissão de geolocalização. "
@@ -90,6 +95,26 @@ export default function Create({ auth, colaboradors }) {
         <Container>
           <Card>
             <section className="">
+              {locationDenied && (
+                <Alert severity="warning" className="mb-6">
+                  <AlertTitle>Aviso</AlertTitle>
+                  <p>
+                    O Compartilhamento de Localização não está permitido para
+                    esse site.
+                  </p>
+                  <p>
+                    Para pegar automaticamente as coordenadas deve-se{" "}
+                    <a
+                      className="text-blue-600"
+                      href="https://www.ailos.coop.br/wp-content/uploads/2023/01/Passo-a-passo-HabilitacaoLocalizacaoCO-Ailos.pdf"
+                      target="_blank"
+                    >
+                      ativa a localização.
+                    </a>
+                  </p>
+                </Alert>
+              )}
+
               <header>
                 <h2 className="text-lg font-medium text-gray-900">
                   Informações de registro de ponto.
@@ -167,9 +192,6 @@ export default function Create({ auth, colaboradors }) {
             </section>{" "}
           </Card>
         </Container>
-        <div>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
       </AuthenticatedLayout>
     </>
   );

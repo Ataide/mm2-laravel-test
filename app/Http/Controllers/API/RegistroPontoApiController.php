@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Jobs\RegistroCreated;
 use App\Models\RegistroPonto;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -11,7 +12,8 @@ class RegistroPontoApiController extends BaseApiController
 {
     public function index(): JsonResponse
     {
-        $registros = RegistroPonto::all()->load('colaboradors');
+        $registros = RegistroPonto::all();
+
         return $this->sendResponse($registros, '');
     }
 
@@ -21,20 +23,27 @@ class RegistroPontoApiController extends BaseApiController
             'colaboradors_id' => 'required',
         ]);
 
-        // if(request()->hasfile('selfie')){
-        //     $avatarName = time().'.'.request()->selfie->getClientOriginalExtension();
-        //     request()->selfie->move(public_path('avatars'), $avatarName);
-        // }
-
         if ($validator->fails()) {
             return $this->sendError('Erro de validação', $validator->errors(), 400);
         }
 
-        $resultado = RegistroPonto::create([
+        RegistroCreated::dispatch([
             'colaboradors_id' => $request->colaboradors_id,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
         ]);
 
-        return $this->sendResponse($resultado, '', 201);
+        // $resultado = RegistroPonto::create([
+        //     'colaboradors_id' => $request->colaboradors_id,
+        //     'latitude' => $request->latitude,
+        //     'longitude' => $request->longitude,
+        // ]);
+
+        return $this->sendResponse(array(
+            'colaboradors_id' => $request->colaboradors_id,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ), 'Queued', 202);
 
     }
 }

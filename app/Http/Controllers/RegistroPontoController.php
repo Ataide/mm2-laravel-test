@@ -37,6 +37,6 @@ class RegistroPontoController extends Controller
             'latitude' => $request->latitude,
         ]);
 
-        return Redirect::route('registro-ponto.index');
+        return Redirect::route('dashboard');
     }
 }
